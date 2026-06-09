@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Amit Padhy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  /* Blog-specific extras */
+  .blog-hero-glow {
+    position: fixed;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(78,240,196,0.055) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .subscribe-strip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 4rem;
+  }
+  .subscribe-strip h3 { font-family: var(--sans); font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
+  .subscribe-strip p { font-size: 14px; color: var(--muted); }
+  .subscribe-form { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .subscribe-form input[type="email"] {
+    padding: 0.75rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    min-width: 220px;
+    outline: none;
+    transition: border-color var(--transition);
+  }
+  .subscribe-form input[type="email"]:focus { border-color: rgba(127,255,110,0.4); }
+  .subscribe-form input[type="email"]::placeholder { color: var(--muted); }
+
+  .blog-filter {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 2.5rem 0 0;
+  }
+  .filter-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color var(--transition), border-color var(--transition), background var(--transition);
+  }
+  .filter-btn:hover, .filter-btn.active {
+    color: var(--accent);
+    border-color: rgba(127,255,110,0.3);
+    background: rgba(127,255,110,0.06);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">AP.dev</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../about/index.html">About</a></li>
+    <li><a href="../projects/index.html">Projects</a></li>
+    <li><a href="../experience/index.html">Experience</a></li>
+    <li><a href="../blog/index.html" class="active">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page">
+<div class="hero-grid-bg"></div>
+<div class="blog-hero-glow"></div>
+
+<!-- PAGE HEADER -->
+<div class="page-hero">
+  <span class="label">// thoughts &amp; writing</span>
+  <h1 style="font-size: clamp(2.4rem,5vw,4rem);">The <em>Blog</em></h1>
+  <p style="color:var(--muted); max-width:520px; margin-top:1rem; font-size:1.05rem; line-height:1.85;">
+    Notes on full-stack development, building in public, and lessons learned from shipping real projects.
+  </p>
+
+  <div class="blog-filter">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">Dev</button>
+    <button class="filter-btn">Career</button>
+    <button class="filter-btn">Tools</button>
+  </div>
+</div>
+
+<!-- BLOG GRID -->
+<div class="content-section" style="padding-top: 0;">
+  <div class="blog-grid">
+
+    <!-- Card 1 -->
+    <article class="blog-card">
+      <div class="blog-thumb-placeholder" aria-hidden="true">
+        <span>🏗️</span>
+      </div>
+      <div class="blog-card-body">
+        <div class="blog-card-meta">
+          <span class="blog-card-cat cat-dev">Dev</span>
+          <span class="dot-sep"></span>
+          <span>June 5, 2026</span>
+          <span class="dot-sep"></span>
+          <span>8 min read</span>
+        </div>
+        <h3>Building Wanderlust: What I Learned Deploying My First Full-Stack App</h3>
+        <p>From zero to production: the real lessons behind building a rental platform with Node.js, MongoDB, and Cloudinary. Spoiler — it's never just about the code.</p>
+        <a href="#" class="btn-accent2">Read More →</a>
+      </div>
+    </article>
+
+    <!-- Card 2 -->
+    <article class="blog-card">
+      <div class="blog-thumb-placeholder" aria-hidden="true">
+        <span>🎓</span>
+      </div>
+      <div class="blog-card-body">
+        <div class="blog-card-meta">
+          <span class="blog-card-cat cat-career">Career</span>
+          <span class="dot-sep"></span>
+          <span>May 20, 2026</span>
+          <span class="dot-sep"></span>
+          <span>5 min read</span>
+        </div>
+        <h3>Leading Technical Workshops as a Final-Year Student: What Actually Works</h3>
+        <p>How I organised and ran full-stack dev sessions for 50+ students at A.C. Patil — the prep, the chaos, and what I'd do differently next time.</p>
+        <a href="#" class="btn-accent2">Read More →</a>
+      </div>
+    </article>
+
+    <!-- Card 3 -->
+    <article class="blog-card">
+      <div class="blog-thumb-placeholder" aria-hidden="true">
+        <span>🛠️</span>
+      </div>
+      <div class="blog-card-body">
+        <div class="blog-card-meta">
+          <span class="blog-card-cat cat-tools">Tools</span>
+          <span class="dot-sep"></span>
+          <span>Apr 30, 2026</span>
+          <span class="dot-sep"></span>
+          <span>6 min read</span>
+        </div>
+        <h3>My MERN Stack Toolbelt: The Setup That Keeps Me Moving Fast</h3>
+        <p>VS Code extensions, Postman workflows, and Git strategies that cut my dev loop in half — a practical guide for any beginner building with the MERN stack.</p>
+        <a href="#" class="btn-accent2">Read More →</a>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- Subscribe Strip -->
+  <div class="subscribe-strip">
+    <div>
+      <h3>Get new posts in your inbox</h3>
+      <p>No spam. Unsubscribe any time.</p>
+    </div>
+    <form class="subscribe-form" onsubmit="return false;">
+      <input type="email" placeholder="you@example.com" autocomplete="email">
+      <button type="submit" class="btn-primary">Subscribe →</button>
+    </form>
+  </div>
+</div>
+
+</div><!-- .page -->
+
+<footer>
+  <p>© 2026 Amit Padhy</p>
+  <p>Built with Node.js &amp; caffeine</p>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  // Filter buttons (UI only — no real filtering since cards are static)
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

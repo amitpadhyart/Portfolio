@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Amit Padhy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">AP.dev</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../about/index.html">About</a></li>
+    <li><a href="../projects/index.html" class="active">Projects</a></li>
+    <li><a href="../experience/index.html">Experience</a></li>
+    <li><a href="../blog/index.html">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page">
+<div class="hero-grid-bg"></div>
+
+<!-- PAGE HEADER -->
+<div class="page-hero">
+  <span class="label">// things I've built</span>
+  <h1 style="font-size: clamp(2.4rem,5vw,4rem);">My <em>Projects</em></h1>
+  <p style="color:var(--muted); max-width:520px; margin-top:1rem; font-size:1.05rem; line-height:1.85;">
+    Production-grade applications and experiments — built, deployed, and learned from.
+  </p>
+</div>
+
+<!-- PROJECTS LIST -->
+<div class="content-section" style="padding-top: 1rem;">
+
+  <div class="project-card featured">
+    <div>
+      <h3 class="project-name">Wanderlust</h3>
+      <div class="project-stack">
+        <span class="stack-tag">Node.js</span>
+        <span class="stack-tag">Express.js</span>
+        <span class="stack-tag">MongoDB</span>
+        <span class="stack-tag">EJS</span>
+        <span class="stack-tag">Cloudinary</span>
+        <span class="stack-tag">Passport.js</span>
+        <span class="stack-tag">Render</span>
+      </div>
+      <ul class="project-bullets">
+        <li>Production-grade vacation rental platform replicating core Airbnb functionality with property listings and user authentication, deployed through the full SDLC.</li>
+        <li>RESTful Express.js back-end using MVC architecture for maintainable, testable code across user management and review systems.</li>
+        <li>Built centralized async error-handling middleware that reduced unhandled promise rejections to zero.</li>
+        <li>Server-side validation for all CRUD operations ensuring data integrity and security throughout the application.</li>
+      </ul>
+    </div>
+    <div class="project-links">
+      <a href="https://github.com/amitpadhyart" class="icon-link" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+
+  <div class="project-card secondary">
+    <div>
+      <h3 class="project-name">VoxScript</h3>
+      <div class="project-stack">
+        <span class="stack-tag">In Progress</span>
+        <span class="stack-tag">LaTeX</span>
+      </div>
+      <ul class="project-bullets">
+        <li>An emerging project exploring the future of scripting and document automation — "the future that will take place of LaTeX."</li>
+        <li>Designed to make structured document creation dramatically more approachable without sacrificing typographic precision.</li>
+        <li>Available on GitHub — follow along as it develops.</li>
+      </ul>
+    </div>
+    <div class="project-links">
+      <a href="https://github.com/amitpadhyart/VoxScript" class="icon-link" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+
+  <!-- More Coming Soon Card -->
+  <div class="project-card" style="border-style: dashed; opacity: 0.6;">
+    <div>
+      <h3 class="project-name" style="color:var(--muted);">More coming soon...</h3>
+      <p style="font-size:14px; color:var(--faint); margin-top:0.5rem;">
+        Currently building in public. Follow on GitHub to see what's next.
+      </p>
+    </div>
+    <div class="project-links">
+      <a href="https://github.com/amitpadhyart" class="icon-link" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- .page -->
+
+<footer>
+  <p>© 2026 Amit Padhy</p>
+  <p>Built with Node.js &amp; caffeine</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
