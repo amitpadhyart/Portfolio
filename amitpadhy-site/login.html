@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — Amit Padhy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #f7f3ee;
+  --canvas:    #ffffff;
+  --surface:   #f0ebe3;
+  --border:    #ddd5c8;
+  --border2:   #c9bfb2;
+  --text:      #1c160e;
+  --muted:     #7a6e5f;
+  --muted2:    #a89880;
+  --accent:    #e8500a;
+  --accent-h:  #c23b00;
+  --accent-lt: #fdf0e8;
+  --sans:      'Inter', system-ui, sans-serif;
+  --serif:     'Lora', Georgia, serif;
+  --r:         6px;
+  --t:         160ms ease;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ── Nav ── */
+nav {
+  background: var(--canvas);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(1.5rem, 5vw, 3.5rem);
+  height: 56px;
+}
+.nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--accent); letter-spacing: -0.01em; text-decoration: none; }
+.nav-back { font-size: 13px; color: var(--muted); font-weight: 500; text-decoration: none; transition: color var(--t); }
+.nav-back:hover { color: var(--text); }
+
+/* ── Page layout ── */
+.page {
+  min-height: calc(100vh - 56px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--canvas);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 24px rgba(28,22,14,0.07);
+}
+
+.card-icon {
+  width: 48px; height: 48px;
+  background: var(--accent-lt); border: 2px solid var(--accent);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.card-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.card-header { margin-bottom: 2rem; }
+.card-header h1 { font-family: var(--serif); font-size: 1.55rem; font-weight: 600; margin-bottom: 0.3rem; }
+.card-header p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── Form ── */
+.form-group { margin-bottom: 1.25rem; }
+.form-group label {
+  display: block; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 0.4rem;
+}
+
+.input-wrap { position: relative; }
+.form-group input {
+  width: 100%; background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--r); color: var(--text); font-family: var(--sans);
+  font-size: 14px; padding: 0.7rem 2.75rem 0.7rem 0.9rem;
+  outline: none; transition: border-color var(--t), box-shadow var(--t);
+}
+.form-group input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(232,80,10,0.1);
+}
+.form-group input::placeholder { color: var(--muted2); }
+.form-group input.error { border-color: #dc2626; box-shadow: 0 0 0 3px rgba(220,38,38,0.1); }
+
+/* Toggle password visibility */
+.toggle-pw {
+  position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; padding: 0;
+  color: var(--muted2); transition: color var(--t); line-height: 0;
+}
+.toggle-pw:hover { color: var(--muted); }
+.toggle-pw svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+
+/* Error message */
+.error-msg {
+  display: none;
+  font-size: 12px; color: #dc2626; margin-top: 0.4rem;
+  align-items: center; gap: 5px;
+}
+.error-msg.show { display: flex; }
+
+/* ── Submit ── */
+.btn-primary {
+  width: 100%; padding: 0.75rem 1.1rem;
+  background: var(--accent); border: none; border-radius: var(--r);
+  color: #fff; font-family: var(--sans); font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: background var(--t), opacity var(--t);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 0.5rem;
+}
+.btn-primary:hover { background: var(--accent-h); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-primary svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; animation: spin 0.8s linear infinite; display: none; }
+.btn-primary.loading svg { display: block; }
+.btn-primary.loading .btn-label { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Note ── */
+.card-note {
+  margin-top: 1.5rem; padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 12px; color: var(--muted2); text-align: center; line-height: 1.7;
+}
+.card-note a { color: var(--accent); text-decoration: none; }
+.card-note a:hover { text-decoration: underline; }
+
+/* ── Shake animation for wrong password ── */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+.shake { animation: shake 0.4s ease; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">AP.dev</a>
+  <a href="../blog/index.html" class="nav-back">← Back to blog</a>
+</nav>
+
+<div class="page">
+  <div class="card" id="login-card">
+
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+
+    <div class="card-header">
+      <h1>Editor sign‑in</h1>
+      <p>Enter your password to access post editing and publishing.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <div class="input-wrap">
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          autofocus
+        >
+        <button class="toggle-pw" id="toggle-pw" type="button" aria-label="Show password" tabindex="-1">
+          <!-- Eye icon (shown when password hidden) -->
+          <svg id="eye-open" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <!-- Eye-off icon (shown when password visible) -->
+          <svg id="eye-closed" viewBox="0 0 24 24" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        </button>
+      </div>
+      <div class="error-msg" id="error-msg">
+        <svg viewBox="0 0 24 24" width="13" height="13" stroke="#dc2626" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Incorrect password. Please try again.
+      </div>
+    </div>
+
+    <button class="btn-primary" id="sign-in-btn" type="button">
+      <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+      <span class="btn-label">Sign in</span>
+    </button>
+
+    <p class="card-note">
+      Only the site owner can sign in.<br>
+      <a href="../blog/index.html">Return to blog →</a>
+    </p>
+
+  </div>
+</div>
+
+<script>
+  /*
+   * ─────────────────────────────────────────────────────────
+   *  HOW TO CHANGE YOUR PASSWORD
+   *  ─────────────────────────────────────────────────────────
+   *  1. Open your browser console on this page.
+   *  2. Run:
+   *       await hashPassword('your-new-password')
+   *     (the function is exposed on window for convenience)
+   *  3. Copy the hex string that's logged.
+   *  4. Replace the STORED_HASH value below with it.
+   *  5. Done — the plain password never appears in source.
+   * ─────────────────────────────────────────────────────────
+   *  Default password: BlogAdmin2026
+   * ─────────────────────────────────────────────────────────
+   */
+  const STORED_HASH = '439e79346c6b4e1a5d7b1ade458a97066e0e936e21554098b64e5fa3427852d7';
+
+  // Session duration in milliseconds (default: 8 hours)
+  const SESSION_DURATION_MS = 8 * 60 * 60 * 1000;
+
+  const SESSION_KEY  = 'ap_blog_auth';
+  const REDIRECT_KEY = 'ap_blog_redirect';
+
+  /* ── Hash helper (also exposed on window for password-change workflow) ── */
+  async function hashPassword(pw) {
+    const enc  = new TextEncoder().encode(pw);
+    const buf  = await crypto.subtle.digest('SHA-256', enc);
+    const hex  = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    console.log('SHA-256 hash:', hex);
+    return hex;
+  }
+  window.hashPassword = hashPassword;
+
+  /* ── If already authed, skip login ── */
+  function isAuthed() {
+    try {
+      const s = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
+      return s && s.authed && Date.now() < s.expires;
+    } catch { return false; }
+  }
+
+  if (isAuthed()) {
+    const dest = sessionStorage.getItem(REDIRECT_KEY) || '../blog/index.html';
+    sessionStorage.removeItem(REDIRECT_KEY);
+    location.replace(dest);
+  }
+
+  /* ── Toggle password visibility ── */
+  const pwInput   = document.getElementById('password');
+  const toggleBtn = document.getElementById('toggle-pw');
+  const eyeOpen   = document.getElementById('eye-open');
+  const eyeClosed = document.getElementById('eye-closed');
+
+  toggleBtn.addEventListener('click', () => {
+    const showing = pwInput.type === 'text';
+    pwInput.type      = showing ? 'password' : 'text';
+    eyeOpen.style.display   = showing ? '' : 'none';
+    eyeClosed.style.display = showing ? 'none' : '';
+  });
+
+  /* ── Sign-in logic ── */
+  const signInBtn = document.getElementById('sign-in-btn');
+  const errorMsg  = document.getElementById('error-msg');
+  const card      = document.getElementById('login-card');
+
+  async function attemptLogin() {
+    const pw = pwInput.value;
+    if (!pw) { pwInput.focus(); return; }
+
+    // Show loading state
+    signInBtn.classList.add('loading');
+    signInBtn.disabled = true;
+    pwInput.classList.remove('error');
+    errorMsg.classList.remove('show');
+
+    // Small artificial delay so it doesn't feel instant (also gives crypto time)
+    await new Promise(r => setTimeout(r, 350));
+
+    const hash = await hashPassword(pw);
+
+    if (hash === STORED_HASH) {
+      // Auth success — write session
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+        authed:  true,
+        expires: Date.now() + SESSION_DURATION_MS,
+      }));
+      const dest = sessionStorage.getItem(REDIRECT_KEY) || '../blog/index.html';
+      sessionStorage.removeItem(REDIRECT_KEY);
+      location.replace(dest);
+    } else {
+      // Auth failure
+      signInBtn.classList.remove('loading');
+      signInBtn.disabled = false;
+      pwInput.classList.add('error');
+      errorMsg.classList.add('show');
+      card.classList.remove('shake');
+      void card.offsetWidth; // reflow to re-trigger animation
+      card.classList.add('shake');
+      pwInput.select();
+    }
+  }
+
+  signInBtn.addEventListener('click', attemptLogin);
+  pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') attemptLogin(); });
+</script>
+</body>
+</html>
