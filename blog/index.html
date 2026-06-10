@@ -66,10 +66,8 @@ nav {
 /* ── Post list ── */
 .post-list { display: flex; flex-direction: column; }
 
-/* CHANGE 1: clickable card */
 .post-item {
-  display: grid; grid-template-columns: 1fr 80px;
-  gap: 1.25rem; align-items: start;
+  display: block;
   padding: 1.75rem 0; border-bottom: 1px solid var(--border);
   cursor: pointer;
   transition: background var(--t);
@@ -82,21 +80,17 @@ nav {
 .post-item:hover { background: rgba(232, 80, 10, 0.04); }
 .post-item:hover .post-title { color: var(--accent); }
 
-.post-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
-.post-cat {
+.post-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; flex-wrap: wrap; }
+.post-tag {
   font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
   text-transform: uppercase; padding: 3px 9px; border-radius: 4px;
+  background: #e8f4fd; color: #1e6fa8;
 }
-.cat-dev    { background: #e8f4fd; color: #1e6fa8; }
-.cat-career { background: #edf7ed; color: #2e7d32; }
-.cat-tools  { background: #fff8e1; color: #b45309; }
-.cat-other  { background: #f3e8ff; color: #7c3aed; }
 
 .post-date { font-size: 12px; color: var(--muted2); }
 .post-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; color: var(--text); margin: 0 0 0.45rem; line-height: 1.4; transition: color var(--t); }
 .post-excerpt { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin: 0 0 1rem; }
 .post-footer { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
-.read-time { font-size: 11px; color: var(--muted2); }
 .btn-edit {
   font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
   padding: 3px 10px; border: 1px solid var(--border2); border-radius: 4px;
@@ -104,19 +98,12 @@ nav {
 }
 .btn-edit:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-lt); }
 
-/* CHANGE 3: inline delete button */
 .btn-delete {
   font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
   padding: 3px 10px; border: 1px solid #fca5a5; border-radius: 4px;
   color: #dc2626; background: #fef2f2; transition: color var(--t), border-color var(--t), background var(--t);
 }
 .btn-delete:hover { background: #fee2e2; border-color: #f87171; }
-
-.post-thumb {
-  width: 80px; height: 64px; background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--r); display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem; flex-shrink: 0;
-}
 
 /* ── Sidebar ── */
 .blog-sidebar { display: flex; flex-direction: column; gap: 1.25rem; position: sticky; top: 5rem; }
@@ -169,7 +156,7 @@ nav {
 .fab:hover { transform: scale(1.07); box-shadow: 0 6px 28px rgba(232,80,10,0.55); }
 .fab:active { transform: scale(0.95); }
 
-/* ── OVERLAY SHELL (shared by meta-step and editor-step) ── */
+/* ── OVERLAY SHELL ── */
 .overlay {
   display: none; position: fixed; inset: 0; z-index: 300;
   background: var(--bg); overflow-y: auto;
@@ -198,21 +185,48 @@ nav {
 .form-group { margin-bottom: 1.3rem; }
 .form-group label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
 .form-group input,
-.form-group select,
 .form-group textarea {
   width: 100%; background: var(--bg); border: 1px solid var(--border);
   border-radius: var(--r); color: var(--text); font-family: var(--sans); font-size: 14px;
   padding: 0.65rem 0.9rem; outline: none; transition: border-color var(--t); resize: vertical;
 }
 .form-group input:focus,
-.form-group select:focus,
 .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,80,10,0.1); }
 .form-group input::placeholder,
 .form-group textarea::placeholder { color: var(--muted2); }
-.form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a6e5f' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; padding-right: 2.5rem; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-@media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
 .form-group textarea { min-height: 88px; }
+
+/* Tags Input Container styling */
+.tags-input-container {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 0.4rem 0.6rem;
+  min-height: 44px; cursor: text; align-items: center;
+  transition: border-color var(--t), box-shadow var(--t);
+}
+.tags-input-container:focus-within {
+  border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,80,10,0.1);
+}
+.tags-input-container input {
+  border: none; background: transparent; outline: none; padding: 0.2rem;
+  flex-grow: 1; min-width: 120px; font-family: var(--sans); font-size: 14px;
+  color: var(--text); box-shadow: none;
+}
+.tags-input-container input:focus { border-color: transparent; box-shadow: none; }
+.tags-input-container input::placeholder { color: var(--muted2); }
+
+.tag-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #f0f6ff; border: 1px solid #3b82f6;
+  color: #111; font-size: 13px; font-family: var(--sans);
+  padding: 2px 4px 2px 8px; border-radius: 4px;
+}
+.tag-remove {
+  color: #3b82f6; font-size: 16px; line-height: 1; padding: 0 2px;
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+}
+.tag-remove:hover { color: #1d4ed8; }
+
 .meta-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
 .step-note { font-size: 12px; color: var(--muted2); }
 
@@ -303,7 +317,7 @@ nav {
 .reader-back { font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; display: flex; align-items: center; gap: 6px; transition: color var(--t); }
 .reader-back:hover { color: var(--accent); }
 .reader-inner { max-width: 1100px; margin: 0 auto; padding: 3.5rem 1.5rem 6rem; }
-.reader-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; }
+.reader-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
 .reader-title { font-family: var(--serif); font-weight: 600; font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.22; margin-bottom: 1.25rem; color: var(--text); }
 .reader-excerpt { font-size: 1.1rem; color: var(--muted); line-height: 1.75; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); font-style: italic; }
 .reader-body { font-family: var(--serif); font-size: 1.05rem; line-height: 1.9; color: #2c2016; white-space: pre-wrap; }
@@ -320,10 +334,8 @@ nav {
 footer { border-top: 1px solid var(--border); padding: 1.75rem clamp(1.5rem, 5vw, 3.5rem); display: flex; justify-content: space-between; font-size: 12px; color: var(--muted2); background: var(--canvas); }
 
 /* ── Auth UI ── */
-/* Editor controls are hidden by default; .authed on body reveals them */
 .editor-only { display: none !important; }
 body.authed .editor-only { display: inline-flex !important; }
-/* FAB specifically is block-level */
 .fab.editor-only { display: none !important; }
 body.authed .fab.editor-only { display: flex !important; }
 
@@ -341,7 +353,6 @@ body.authed .fab.editor-only { display: flex !important; }
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
 <nav>
   <a href="../index.html" class="nav-logo">AP.dev</a>
   <ul class="nav-links">
@@ -352,11 +363,9 @@ body.authed .fab.editor-only { display: flex !important; }
     <li><a href="../blog/index.html" class="active">Blog</a></li>
     <li><a href="../index.html#contact">Contact</a></li>
   </ul>
-  <!-- Auth controls injected by JS -->
   <div id="nav-auth"></div>
 </nav>
 
-<!-- ═══ BLOG LIST ═══ -->
 <div class="page" id="blog-list-page">
   <div class="blog-page-header">
     <span class="label">// thoughts &amp; writing</span>
@@ -395,12 +404,8 @@ body.authed .fab.editor-only { display: flex !important; }
   <p>Built with Node.js &amp; caffeine</p>
 </footer>
 
-<!-- FAB -->
 <button class="fab editor-only" id="fab" aria-label="New post" title="New post">＋</button>
 
-<!-- ═══════════════════════════════════════════════
-     STEP 1 — METADATA OVERLAY
-════════════════════════════════════════════════ -->
 <div class="overlay" id="meta-overlay">
   <div class="meta-shell">
 
@@ -428,30 +433,11 @@ body.authed .fab.editor-only { display: flex !important; }
           <textarea id="m-excerpt" rows="3" placeholder="A one or two sentence summary…"></textarea>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="m-category">Category</label>
-            <select id="m-category">
-              <option value="dev">Dev</option>
-              <option value="career">Career</option>
-              <option value="tools">Tools</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="m-readtime">Read time</label>
-            <input id="m-readtime" type="text" placeholder="e.g. 5 min read">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="m-emoji">Thumbnail emoji</label>
-            <input id="m-emoji" type="text" placeholder="🚀" maxlength="4">
-          </div>
-          <div class="form-group">
-            <label for="m-tags">Tags <span style="font-weight:400;text-transform:none;letter-spacing:0">(comma-separated)</span></label>
-            <input id="m-tags" type="text" placeholder="mern, deployment, node">
+        <div class="form-group">
+          <label>Tags</label>
+          <div class="tags-input-container" id="tags-container">
+            <div id="tags-list" style="display: contents;"></div>
+            <input id="m-tags-input" type="text" placeholder="Add a tag and press Enter">
           </div>
         </div>
 
@@ -465,13 +451,9 @@ body.authed .fab.editor-only { display: flex !important; }
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     STEP 2 — FULL-WIDTH BLOGGER-STYLE EDITOR
-════════════════════════════════════════════════ -->
 <div class="overlay" id="editor-overlay">
   <div class="editor-shell">
 
-    <!-- Top bar -->
     <div class="editor-topbar">
       <div class="editor-topbar-left">
         <span class="editor-logo">AP.dev</span>
@@ -484,10 +466,8 @@ body.authed .fab.editor-only { display: flex !important; }
       </div>
     </div>
 
-    <!-- Horizontal toolbar -->
     <div class="editor-toolbar" id="editor-toolbar">
 
-      <!-- History -->
       <button class="tb-btn" title="Undo" data-cmd="undo">
         <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5.78"/></svg>
       </button>
@@ -497,7 +477,6 @@ body.authed .fab.editor-only { display: flex !important; }
 
       <div class="tb-sep"></div>
 
-      <!-- Format -->
       <select class="tb-select" id="tb-heading" title="Paragraph style">
         <option value="p">Normal</option>
         <option value="h1">Heading 1</option>
@@ -507,7 +486,6 @@ body.authed .fab.editor-only { display: flex !important; }
 
       <div class="tb-sep"></div>
 
-      <!-- Inline -->
       <button class="tb-btn" title="Bold" data-cmd="bold"><svg viewBox="0 0 24 24"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg></button>
       <button class="tb-btn" title="Italic" data-cmd="italic"><svg viewBox="0 0 24 24"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg></button>
       <button class="tb-btn" title="Underline" data-cmd="underline"><svg viewBox="0 0 24 24"><path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"/><line x1="4" y1="21" x2="20" y2="21"/></svg></button>
@@ -515,26 +493,22 @@ body.authed .fab.editor-only { display: flex !important; }
 
       <div class="tb-sep"></div>
 
-      <!-- Alignment -->
       <button class="tb-btn" title="Align left" data-cmd="justifyLeft"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg></button>
       <button class="tb-btn" title="Align center" data-cmd="justifyCenter"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
       <button class="tb-btn" title="Align right" data-cmd="justifyRight"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="6" y1="18" x2="21" y2="18"/></svg></button>
 
       <div class="tb-sep"></div>
 
-      <!-- Lists -->
       <button class="tb-btn" title="Bullet list" data-cmd="insertUnorderedList"><svg viewBox="0 0 24 24"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></svg></button>
       <button class="tb-btn" title="Numbered list" data-cmd="insertOrderedList"><svg viewBox="0 0 24 24"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></button>
       <button class="tb-btn" title="Block quote" data-cmd="formatBlock" data-val="blockquote"><svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg></button>
 
       <div class="tb-sep"></div>
 
-      <!-- Link / clear -->
       <button class="tb-btn" title="Insert link" id="tb-link-btn"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
       <button class="tb-btn" title="Clear formatting" data-cmd="removeFormat"><svg viewBox="0 0 24 24"><path d="M4 7V4h16v3"/><path d="M5 20h6"/><path d="M13 4 8 20"/><line x1="18" y1="12" x2="22" y2="16"/><line x1="22" y1="12" x2="18" y2="16"/></svg></button>
     </div>
 
-    <!-- Canvas -->
     <div class="editor-body">
       <div class="editor-canvas-wrap">
         <div
@@ -559,19 +533,14 @@ body.authed .fab.editor-only { display: flex !important; }
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     ARTICLE READER
-════════════════════════════════════════════════ -->
 <div class="reader-backdrop" id="reader-backdrop">
   <div class="reader-topbar">
     <button class="reader-back" id="reader-close">← Back to blog</button>
     <button class="btn-edit" id="reader-edit-btn">Edit post</button>
   </div>
   <div class="reader-inner">
-    <div class="reader-meta">
-      <span class="post-cat" id="reader-cat"></span>
+    <div class="reader-meta" id="reader-meta-container">
       <span class="post-date" id="reader-date"></span>
-      <span class="read-time" id="reader-time"></span>
     </div>
     <h1 class="reader-title" id="reader-title"></h1>
     <p class="reader-excerpt" id="reader-excerpt"></p>
@@ -579,117 +548,52 @@ body.authed .fab.editor-only { display: flex !important; }
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- ═══════════════════════════════════════════════
-     JAVASCRIPT
-════════════════════════════════════════════════ -->
 <script>
 /* ── Default posts ── */
 const DEFAULT_POSTS = [
   {
     id: 'post-1',
     title: 'Building Wanderlust: What I Learned Deploying My First Full-Stack App',
-    excerpt: 'From zero to production: the real lessons behind building a rental platform with Node.js, MongoDB, and Cloudinary. Spoiler — it\'s never just about the code.',
-    category: 'dev', emoji: '🏗️', readtime: '8 min read',
+    excerpt: 'From zero to production: the real lessons behind building a rental platform with Node.js, MongoDB, and Cloudinary.',
     date: 'Jun 5, 2026', tags: 'mern, deployment, node',
-    body: `Shipping your first full-stack app is equal parts exciting and humbling. When I set out to build Wanderlust — a property rental platform — I thought the hardest part would be wiring up the backend. I was wrong.
-
-The real challenge was everything around the code: environment variables that worked locally but broke on Render, image uploads that exceeded Cloudinary's free-tier limits at exactly the wrong time, and MongoDB Atlas connection strings that refused to cooperate behind a university firewall.
-
-Here's what I'd tell myself at the start:
-
-1. Environment config is a first-class concern
-Don't leave dotenv setup to the last minute. Map every secret early, keep a .env.example committed to the repo, and test your deployment pipeline with real environment variables from day one.
-
-2. Error boundaries save you at 2am
-Unhandled promise rejections will bring your Express server down silently in production. Add a global error handler and log everything to a file — not just the console.
-
-3. Cloudinary transforms are powerful but have limits
-Use responsive breakpoints and lazy-load images from the start. Retrofitting lazy loading into a finished UI is painful.
-
-4. MongoDB Atlas free tier is generous — until it isn't
-512 MB goes fast if you're storing full image blobs (don't). Store only Cloudinary URLs; keep your documents lean.
-
-The biggest lesson: deploy early, break things in staging, not production. The feedback loop from a live URL is irreplaceable.`
+    body: `Shipping your first full-stack app is equal parts exciting and humbling. When I set out to build Wanderlust — a property rental platform — I thought the hardest part would be wiring up the backend. I was wrong.`
   },
   {
     id: 'post-2',
     title: 'Leading Technical Workshops as a Final-Year Student: What Actually Works',
     excerpt: 'How I organised and ran full-stack dev sessions for 50+ students at A.C. Patil — the prep, the chaos, and what I\'d do differently.',
-    category: 'career', emoji: '🎓', readtime: '5 min read',
     date: 'May 20, 2026', tags: 'teaching, workshops, mern',
-    body: `When the college tech committee asked me to lead a series of MERN stack workshops, I said yes before thinking through the logistics.
-
-What I got right:
-
-Starter repos with clear branches
-I pushed a starter repo to GitHub with a branch per session. This saved 20 minutes per session that would have been lost to setup chaos.
-
-Live coding over slides
-For a hands-on workshop, live coding with a large font and an audience-visible terminal kept people engaged. Mistakes I made on screen were teaching moments, not embarrassments.
-
-What I'd do differently:
-
-Pre-session "setup check" doc
-At least 30% of students hit environment issues in the first 10 minutes. A simple README with OS-specific setup steps, sent out 48 hours before, would have cut that friction dramatically.
-
-Smaller breakout groups
-50 students is too many for one facilitator on tricky topics like JWT auth. Next time I'd split into groups of 15–20 with one mentor each.
-
-The unexpected reward: explaining a concept you think you know — like the React render cycle — to a sceptical student forces you to understand it properly.`
+    body: `When the college tech committee asked me to lead a series of MERN stack workshops, I said yes before thinking through the logistics.`
   },
   {
     id: 'post-3',
     title: 'My MERN Stack Toolbelt: The Setup That Keeps Me Moving Fast',
-    excerpt: 'VS Code extensions, Postman workflows, and Git strategies that cut my dev loop in half — a practical guide for beginners building with the MERN stack.',
-    category: 'tools', emoji: '🛠️', readtime: '6 min read',
+    excerpt: 'VS Code extensions, Postman workflows, and Git strategies that cut my dev loop in half.',
     date: 'Apr 30, 2026', tags: 'vscode, git, postman, mern',
-    body: `Tooling opinions are personal, but a good setup genuinely changes how fast you can move.
-
-VS Code extensions I can't live without:
-— ESLint + Prettier: auto-format on save, no more arguing about semicolons
-— REST Client: test endpoints inline without leaving VS Code
-— GitLens: inline blame and one-click history for any line
-
-Terminal setup:
-I use Oh My Zsh with the git plugin. The branch name in my prompt has saved me from pushing to main more than once.
-
-Git strategy for solo projects:
-Even solo, I use short-lived feature branches. It forces me to think in units of work, keeps the commit history readable, and makes reverting a feature trivial.
-
-MongoDB Compass:
-For visual inspection of documents and running one-off aggregation pipelines, Compass is indispensable. The "explain plan" feature has helped me spot missing indexes before they became production problems.
-
-The meta-lesson: the value of any tool is proportional to how well you know it. Pick a small set, go deep, and resist the urge to chase every new extension.`
+    body: `Tooling opinions are personal, but a good setup genuinely changes how fast you can move.`
   }
 ];
 
 /* ── State ── */
 let posts = [];
-let editingId = null;       // null = new post; string = id of post being edited
+let editingId = null; 
 let currentReadId = null;
 let draftMeta = {};
-
-const CAT_META = {
-  dev:    { label: 'Dev',    cls: 'cat-dev' },
-  career: { label: 'Career', cls: 'cat-career' },
-  tools:  { label: 'Tools',  cls: 'cat-tools' },
-  other:  { label: 'Other',  cls: 'cat-other' },
-};
+let activeTags = []; // Stores the tags for the active form
 
 /* ── Storage ── */
 function loadPosts() {
   try {
-    const s = localStorage.getItem('ap_blog_posts_v2');
+    const s = localStorage.getItem('ap_blog_posts_v4');
     if (s) { posts = JSON.parse(s); return; }
   } catch(e) {}
   posts = DEFAULT_POSTS.map(p => ({...p}));
   savePosts();
 }
 function savePosts() {
-  try { localStorage.setItem('ap_blog_posts_v2', JSON.stringify(posts)); } catch(e) {}
+  try { localStorage.setItem('ap_blog_posts_v4', JSON.stringify(posts)); } catch(e) {}
 }
 
 /* ── Toast ── */
@@ -699,6 +603,48 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2200);
 }
 
+/* ── Tags Input Logic ── */
+const tagInput = document.getElementById('m-tags-input');
+const tagsList = document.getElementById('tags-list');
+const tagsContainer = document.getElementById('tags-container');
+
+function renderFormTags() {
+  tagsList.innerHTML = activeTags.map((t, i) => `
+    <span class="tag-chip">
+      ${esc(t)}
+      <button type="button" class="tag-remove" data-index="${i}">×</button>
+    </span>
+  `).join('');
+}
+
+tagInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const val = tagInput.value.trim();
+    if (val && !activeTags.includes(val)) {
+      activeTags.push(val);
+      renderFormTags();
+      tagInput.value = '';
+    }
+  } else if (e.key === 'Backspace' && tagInput.value === '' && activeTags.length > 0) {
+    activeTags.pop();
+    renderFormTags();
+  }
+});
+
+tagsList.addEventListener('click', (e) => {
+  if (e.target.classList.contains('tag-remove')) {
+    const idx = parseInt(e.target.dataset.index, 10);
+    activeTags.splice(idx, 1);
+    renderFormTags();
+  }
+});
+
+tagsContainer.addEventListener('click', () => {
+  tagInput.focus();
+});
+
+
 /* ── Render list ── */
 function renderPosts() {
   const list = document.getElementById('post-list');
@@ -707,25 +653,24 @@ function renderPosts() {
     renderTopics(); return;
   }
   list.innerHTML = posts.map(p => {
-    const m = CAT_META[p.category] || CAT_META.other;
+    const tagArray = p.tags ? p.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+    const tagsHTML = tagArray.map(t => `<span class="post-tag">${esc(t)}</span>`).join('');
+    
     const editorBtns = isAuthed()
       ? `<button class="btn-edit" data-action="edit" data-id="${p.id}">Edit</button>
          <button class="btn-delete" data-action="delete" data-id="${p.id}">Delete</button>`
       : '';
+      
     return `<article class="post-item" data-id="${p.id}" data-action="read">
-      <div>
         <div class="post-meta">
-          <span class="post-cat ${m.cls}">${m.label}</span>
+          ${tagsHTML}
           <span class="post-date">${p.date}</span>
         </div>
         <h2 class="post-title">${esc(p.title)}</h2>
         <p class="post-excerpt">${esc(p.excerpt)}</p>
         <div class="post-footer">
-          <span class="read-time">${esc(p.readtime)}</span>
           ${editorBtns}
         </div>
-      </div>
-      <div class="post-thumb">${p.emoji || '📝'}</div>
     </article>`;
   }).join('');
   renderTopics();
@@ -733,10 +678,19 @@ function renderPosts() {
 
 function renderTopics() {
   const counts = {};
-  posts.forEach(p => { counts[p.category] = (counts[p.category]||0)+1; });
-  document.getElementById('topic-list').innerHTML = Object.entries(counts)
-    .map(([c,n]) => `<li><span>${(CAT_META[c]||CAT_META.other).label}</span><span class="topic-count">${String(n).padStart(2,'0')}</span></li>`)
-    .join('') || '<li><span>No posts yet</span></li>';
+  posts.forEach(p => {
+    if(p.tags) {
+      p.tags.split(',').forEach(t => {
+        const tag = t.trim();
+        if(tag) counts[tag] = (counts[tag]||0)+1;
+      });
+    }
+  });
+  
+  const entries = Object.entries(counts).sort((a,b) => b[1] - a[1]); // Sort by frequency
+  document.getElementById('topic-list').innerHTML = entries
+    .map(([c,n]) => `<li><span>#${esc(c)}</span><span class="topic-count">${String(n).padStart(2,'0')}</span></li>`)
+    .join('') || '<li><span>No tags yet</span></li>';
 }
 
 function esc(s) {
@@ -748,7 +702,6 @@ function esc(s) {
 ════════════════════════════════ */
 function openMetaOverlay(existingPost) {
   if (existingPost) {
-    // Editing mode: populate with existing data
     document.getElementById('meta-topbar-title').textContent = 'Edit post — update details';
     document.getElementById('meta-card-heading').textContent = 'Update post details';
     document.getElementById('meta-card-subheading').textContent = 'Edit the post details below, then continue to update the content.';
@@ -757,24 +710,23 @@ function openMetaOverlay(existingPost) {
 
     document.getElementById('m-title').value    = existingPost.title    || '';
     document.getElementById('m-excerpt').value  = existingPost.excerpt  || '';
-    document.getElementById('m-category').value = existingPost.category || 'dev';
-    document.getElementById('m-readtime').value = existingPost.readtime || '';
-    document.getElementById('m-emoji').value    = existingPost.emoji    || '';
-    document.getElementById('m-tags').value     = existingPost.tags     || '';
+    
+    activeTags = existingPost.tags ? existingPost.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
     editingId = existingPost.id;
   } else {
-    // New post mode
     document.getElementById('meta-topbar-title').textContent = 'New post — set up details';
     document.getElementById('meta-card-heading').textContent = 'Before you start writing…';
     document.getElementById('meta-card-subheading').textContent = 'Fill in the post details. You can always edit these later.';
     document.getElementById('meta-next').textContent = 'Start writing →';
     document.getElementById('meta-step-note').textContent = 'Step 1 of 2';
 
-    ['m-title','m-excerpt','m-readtime','m-emoji','m-tags'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('m-category').value = 'dev';
+    ['m-title','m-excerpt'].forEach(id => document.getElementById(id).value = '');
+    activeTags = [];
     editingId = null;
   }
 
+  renderFormTags();
+  document.getElementById('m-tags-input').value = '';
   document.getElementById('meta-overlay').classList.add('open');
   document.getElementById('m-title').focus();
   document.body.style.overflow = 'hidden';
@@ -797,16 +749,12 @@ document.getElementById('meta-next').addEventListener('click', () => {
   draftMeta = {
     title:    title,
     excerpt:  document.getElementById('m-excerpt').value.trim(),
-    category: document.getElementById('m-category').value,
-    readtime: document.getElementById('m-readtime').value.trim() || '5 min read',
-    emoji:    document.getElementById('m-emoji').value.trim() || '📝',
-    tags:     document.getElementById('m-tags').value.trim(),
+    tags:     activeTags.join(', '),
   };
 
   closeMetaOverlay();
 
   if (editingId) {
-    // Open editor with existing post body
     const existingPost = posts.find(p => p.id === editingId);
     openEditor(existingPost);
   } else {
@@ -852,7 +800,6 @@ function closeEditor() {
   editingId = null;
 }
 
-// Placeholder behaviour for contenteditable
 function updatePlaceholders() {
   ['editor-title','editor-content'].forEach(id => {
     const el = document.getElementById(id);
@@ -860,7 +807,6 @@ function updatePlaceholders() {
   });
 }
 
-// Inject placeholder CSS dynamically
 const phStyle = document.createElement('style');
 phStyle.textContent = `
   #editor-title.empty::before { content: attr(data-placeholder); color: #c5bbb0; pointer-events:none; position:absolute; }
@@ -873,7 +819,6 @@ document.head.appendChild(phStyle);
   document.getElementById(id).addEventListener('input', updatePlaceholders);
 });
 
-// Sync topbar title ↔ canvas title
 document.getElementById('editor-title').addEventListener('input', () => {
   document.getElementById('ed-title-topbar').value = document.getElementById('editor-title').textContent;
 });
@@ -881,24 +826,17 @@ document.getElementById('ed-title-topbar').addEventListener('input', e => {
   document.getElementById('editor-title').textContent = e.target.value;
 });
 
-// Back to metadata step — preserve editingId so meta overlay loads existing data
 document.getElementById('ed-back').addEventListener('click', () => {
   const goBackPost = editingId ? posts.find(p => p.id === editingId) : null;
   closeEditor();
-  // Restore draftMeta into the meta form by re-opening with the right mode
   if (goBackPost) {
-    // Merge any unsaved title changes from draftMeta back
     openMetaOverlay({ ...goBackPost, ...draftMeta, id: goBackPost.id });
   } else {
-    // Re-open fresh meta overlay but pre-fill with draftMeta values
     openMetaOverlay(null);
-    // Restore what they had typed
     document.getElementById('m-title').value    = draftMeta.title    || '';
     document.getElementById('m-excerpt').value  = draftMeta.excerpt  || '';
-    document.getElementById('m-category').value = draftMeta.category || 'dev';
-    document.getElementById('m-readtime').value = draftMeta.readtime || '';
-    document.getElementById('m-emoji').value    = draftMeta.emoji    || '';
-    document.getElementById('m-tags').value     = draftMeta.tags     || '';
+    activeTags = draftMeta.tags ? draftMeta.tags.split(',').map(t=>t.trim()).filter(Boolean) : [];
+    renderFormTags();
   }
 });
 
@@ -909,7 +847,6 @@ document.getElementById('ed-cancel-editor').addEventListener('click', () => {
   }
 });
 
-// Publish / Save changes
 document.getElementById('ed-publish').addEventListener('click', () => {
   const title    = document.getElementById('editor-title').textContent.trim();
   const bodyText = document.getElementById('editor-content').innerText.trim();
@@ -920,15 +857,11 @@ document.getElementById('ed-publish').addEventListener('click', () => {
   const date = now.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
 
   if (editingId) {
-    // Save changes to existing post
     const idx = posts.findIndex(p => p.id === editingId);
     if (idx > -1) {
       Object.assign(posts[idx], {
         title,
         excerpt:  draftMeta.excerpt  || posts[idx].excerpt,
-        category: draftMeta.category || posts[idx].category,
-        emoji:    draftMeta.emoji    || posts[idx].emoji,
-        readtime: draftMeta.readtime || posts[idx].readtime,
         tags:     draftMeta.tags     !== undefined ? draftMeta.tags : posts[idx].tags,
         body:     bodyText,
       });
@@ -937,17 +870,12 @@ document.getElementById('ed-publish').addEventListener('click', () => {
     renderPosts();
     closeEditor();
     showToast('Post updated ✓');
-    // Refresh reader if open
     if (currentReadId === editingId) openReader(editingId);
   } else {
-    // Publish new post
     posts.unshift({
       id:       'post-' + Date.now(),
       title,
       excerpt:  draftMeta.excerpt  || '',
-      category: draftMeta.category || 'dev',
-      emoji:    draftMeta.emoji    || '📝',
-      readtime: draftMeta.readtime || '5 min read',
       tags:     draftMeta.tags     || '',
       date,
       body:     bodyText,
@@ -987,11 +915,16 @@ function openReader(id) {
   const p = posts.find(x => x.id === id);
   if (!p) return;
   currentReadId = id;
-  const m = CAT_META[p.category] || CAT_META.other;
-  const catEl = document.getElementById('reader-cat');
-  catEl.textContent = m.label; catEl.className = 'post-cat ' + m.cls;
-  document.getElementById('reader-date').textContent = p.date;
-  document.getElementById('reader-time').textContent = p.readtime;
+  
+  const tagArray = p.tags ? p.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+  const tagsHTML = tagArray.map(t => `<span class="post-tag">${esc(t)}</span>`).join('');
+  
+  // Re-inject tags into reader view dynamically
+  document.getElementById('reader-meta-container').innerHTML = `
+    ${tagsHTML}
+    <span class="post-date" id="reader-date">${p.date}</span>
+  `;
+  
   document.getElementById('reader-title').textContent = p.title;
   document.getElementById('reader-excerpt').textContent = p.excerpt;
   document.getElementById('reader-body').textContent = p.body || 'No content yet. Click "Edit post" to add some.';
@@ -1015,7 +948,6 @@ document.getElementById('reader-edit-btn').addEventListener('click', e => {
 
 /* ── Post list click delegation ── */
 document.getElementById('post-list').addEventListener('click', e => {
-  // Stop propagation from action buttons so the card click doesn't also fire
   const btn = e.target.closest('[data-action]');
   if (!btn) return;
 
@@ -1023,7 +955,6 @@ document.getElementById('post-list').addEventListener('click', e => {
   const id     = btn.dataset.id || btn.closest('[data-id]')?.dataset.id;
 
   if (action === 'read') {
-    // Only trigger read if click was NOT on a button inside the card
     if (e.target.closest('button')) return;
     openReader(id);
   }
@@ -1051,7 +982,6 @@ document.getElementById('post-list').addEventListener('click', e => {
 
 document.getElementById('fab').addEventListener('click', () => requireAuth(() => openMetaOverlay()));
 
-/* ── Keyboard escape ── */
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
   if (document.getElementById('reader-backdrop').classList.contains('open')) closeReader();
@@ -1061,7 +991,6 @@ document.addEventListener('keydown', e => {
    AUTH
 ════════════════════════════════ */
 const SESSION_KEY        = 'ap_blog_auth';
-const SESSION_DURATION_MS = 8 * 60 * 60 * 1000; // 8 hours
 
 function isAuthed() {
   try {
@@ -1092,7 +1021,6 @@ function applyAuthState() {
   }
 }
 
-/* Guard: redirect edit/delete actions to login if not authed */
 function requireAuth(fn) {
   if (isAuthed()) { fn(); return; }
   sessionStorage.setItem('ap_blog_redirect', window.location.href);
